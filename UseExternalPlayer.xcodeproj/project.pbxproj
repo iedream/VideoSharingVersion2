@@ -15,6 +15,9 @@
 		4F7ECB591C8A71EF001C23AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7ECB571C8A71EF001C23AC /* LaunchScreen.storyboard */; };
 		4F7ECB641C8A71EF001C23AC /* UseExternalPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7ECB631C8A71EF001C23AC /* UseExternalPlayerTests.m */; };
 		4F7ECB6F1C8A71EF001C23AC /* UseExternalPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7ECB6E1C8A71EF001C23AC /* UseExternalPlayerUITests.m */; };
+		4F90E6751C8BCD3800C8B652 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F90E6741C8BCD3800C8B652 /* DropboxSDK.framework */; };
+		4F90E6771C8BD9E100C8B652 /* askaList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F90E6761C8BD9E100C8B652 /* askaList.plist */; };
+		58F70D4CA5C5BEF0FCFB9006 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF72D938B20F9A31440890 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,11 @@
 		4F7ECB6A1C8A71EF001C23AC /* UseExternalPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UseExternalPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7ECB6E1C8A71EF001C23AC /* UseExternalPlayerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UseExternalPlayerUITests.m; sourceTree = "<group>"; };
 		4F7ECB701C8A71EF001C23AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F90E6741C8BCD3800C8B652 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		4F90E6761C8BD9E100C8B652 /* askaList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = askaList.plist; sourceTree = "<group>"; };
+		585BDF3959CCE512F32D6279 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A9BF72D938B20F9A31440890 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9FC4B023A33024FA677FABE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F90E6751C8BCD3800C8B652 /* DropboxSDK.framework in Frameworks */,
+				58F70D4CA5C5BEF0FCFB9006 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,10 +91,13 @@
 		4F7ECB3D1C8A71EF001C23AC = {
 			isa = PBXGroup;
 			children = (
+				4F90E6741C8BCD3800C8B652 /* DropboxSDK.framework */,
 				4F7ECB481C8A71EF001C23AC /* UseExternalPlayer */,
 				4F7ECB621C8A71EF001C23AC /* UseExternalPlayerTests */,
 				4F7ECB6D1C8A71EF001C23AC /* UseExternalPlayerUITests */,
 				4F7ECB471C8A71EF001C23AC /* Products */,
+				76D5BFC396B35BFCA22A7BB6 /* Pods */,
+				7DD4CC638DF5BAEA78141265 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +114,7 @@
 		4F7ECB481C8A71EF001C23AC /* UseExternalPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				4F90E6761C8BD9E100C8B652 /* askaList.plist */,
 				4F7ECB4C1C8A71EF001C23AC /* AppDelegate.h */,
 				4F7ECB4D1C8A71EF001C23AC /* AppDelegate.m */,
 				4F7ECB4F1C8A71EF001C23AC /* ViewController.h */,
@@ -140,6 +154,23 @@
 			path = UseExternalPlayerUITests;
 			sourceTree = "<group>";
 		};
+		76D5BFC396B35BFCA22A7BB6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D9FC4B023A33024FA677FABE /* Pods.debug.xcconfig */,
+				585BDF3959CCE512F32D6279 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7DD4CC638DF5BAEA78141265 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9BF72D938B20F9A31440890 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +178,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F7ECB731C8A71EF001C23AC /* Build configuration list for PBXNativeTarget "UseExternalPlayer" */;
 			buildPhases = (
+				222DA9378EBE5727D266432E /* Check Pods Manifest.lock */,
 				4F7ECB421C8A71EF001C23AC /* Sources */,
 				4F7ECB431C8A71EF001C23AC /* Frameworks */,
 				4F7ECB441C8A71EF001C23AC /* Resources */,
+				831C8E1210B486F78293DDE3 /* Embed Pods Frameworks */,
+				7A563522F7DC1259D0CA3054 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -243,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F90E6771C8BD9E100C8B652 /* askaList.plist in Resources */,
 				4F7ECB591C8A71EF001C23AC /* LaunchScreen.storyboard in Resources */,
 				4F7ECB561C8A71EF001C23AC /* Assets.xcassets in Resources */,
 				4F7ECB541C8A71EF001C23AC /* Main.storyboard in Resources */,
@@ -264,6 +299,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		222DA9378EBE5727D266432E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7A563522F7DC1259D0CA3054 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		831C8E1210B486F78293DDE3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4F7ECB421C8A71EF001C23AC /* Sources */ = {
@@ -409,8 +492,15 @@
 		};
 		4F7ECB741C8A71EF001C23AC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9FC4B023A33024FA677FABE /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/UseExternalPlayer",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = UseExternalPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Catherine.UseExternalPlayer;
@@ -420,8 +510,15 @@
 		};
 		4F7ECB751C8A71EF001C23AC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 585BDF3959CCE512F32D6279 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/UseExternalPlayer",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = UseExternalPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Catherine.UseExternalPlayer;
@@ -496,6 +593,7 @@
 				4F7ECB751C8A71EF001C23AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F7ECB761C8A71EF001C23AC /* Build configuration list for PBXNativeTarget "UseExternalPlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +602,7 @@
 				4F7ECB781C8A71EF001C23AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F7ECB791C8A71EF001C23AC /* Build configuration list for PBXNativeTarget "UseExternalPlayerUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +611,7 @@
 				4F7ECB7B1C8A71EF001C23AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
