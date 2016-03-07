@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "YTPlayerView.h"
-#import <DropboxSDK/DropboxSDK.h>
+#import "PlistSettingViewController.h"
 
-@interface ViewController : UIViewController<YTPlayerViewDelegate,UITableViewDelegate,UITableViewDataSource,DBRestClientDelegate>
+
+@interface ViewController : UIViewController<YTPlayerViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet YTPlayerView *playerView;
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
-@property (nonatomic, strong) DBRestClient *restClient;
+
 
 @end
 
