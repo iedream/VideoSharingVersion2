@@ -21,28 +21,40 @@ UIAlertController *emptyGroupName;
 UIAlertController *downloadError;
 UIAlertController *missingFileName;
 UIAlertController *missingFileURL;
+UIAlertController *uploadSuccess;
+UIAlertController *downloadSuccess;
+UIAlertController *uploadError;
 UIAlertAction *okAction;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self updateFileURL];
+    [self setPlist];
     emptyGroupName = [UIAlertController alertControllerWithTitle: @"GroupName cannot be Empty" message:@"Please enter in a GroupName" preferredStyle:UIAlertControllerStyleAlert];
-    downloadError = [UIAlertController alertControllerWithTitle:@"Download Error" message:@"Download Playlist encounters an error. Please make sure you have entered the correct GroupName" preferredStyle:UIAlertControllerStyleAlert];
+    uploadError = [UIAlertController alertControllerWithTitle:@"Upload Error" message:@"Upload Playlist encounters an error. Please make sure you have internet connection" preferredStyle:UIAlertControllerStyleAlert];
+    downloadError = [UIAlertController alertControllerWithTitle:@"Download Error" message:@"Download Playlist encounters an error. Please make sure you have internet connection" preferredStyle:UIAlertControllerStyleAlert];
     missingFileName = [UIAlertController alertControllerWithTitle:@"File Name cannot be Empty" message:@"Please enter in a File Name" preferredStyle:UIAlertControllerStyleAlert];
     missingFileURL = [UIAlertController alertControllerWithTitle:@"File URL cannot be Empty" message:@"Please enter in a File URL" preferredStyle:UIAlertControllerStyleAlert];
+    uploadSuccess = [UIAlertController alertControllerWithTitle:@"Upload Successful" message:@"PlayList successfully Uploaded" preferredStyle:UIAlertControllerStyleAlert];
+    downloadSuccess = [UIAlertController alertControllerWithTitle:@"Download Successful" message:@"PlayList successfully Downloaded" preferredStyle:UIAlertControllerStyleAlert];
     okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
     [emptyGroupName addAction:okAction];
+    [uploadError addAction:okAction];
     [downloadError addAction:okAction];
     [missingFileName addAction:okAction];
     [missingFileURL addAction:okAction];
+    [uploadSuccess addAction:okAction];
+    [downloadSuccess addAction:okAction];
+    
+   // self.fileURLField.delegate = self;
+    
     self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     self.restClient.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateFileURL];
+    self.groupNameField.text = plistName;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,11 +64,7 @@ UIAlertAction *okAction;
 
 #pragma mark - Upload Plist Methods
 - (IBAction)uploadPlist:(id)sender {
-    [self updateFileURL];
-    if ([plistName length] == 0) {
-        [self presentAlertView:emptyGroupName];
-        return;
-    }
+    [self changePlistName:nil];
     NSFileManager *fileManage = [NSFileManager defaultManager];
     if(![fileManage fileExistsAtPath:fileURL.path]){
         [self writeToFile];
@@ -82,30 +90,30 @@ UIAlertAction *okAction;
 - (void)restClient:(DBRestClient *)client
 loadMetadataFailedWithError:(NSError *)error {
     NSLog(@"Error loading metadata: %@", error);
+    [self presentAlertView:uploadError];
 }
 
 -(void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath from:(NSString *)srcPath metadata:(DBMetadata *)metadata {
     NSLog(@"File uploaded successfully to path: %@", metadata.path);
+    [self presentAlertView:uploadSuccess];
 }
 
 -(void)restClient:(DBRestClient *)client uploadFileFailedWithError:(NSError *)error {
     NSLog(@"Failure");
+    [self presentAlertView:uploadError];
 }
 
 #pragma mark - Download Plist Methods
 
 - (IBAction)downloadPlist:(id)sender {
-    [self updateFileURL];
-    if ([plistName length] == 0) {
-        [self presentAlertView:emptyGroupName];
-        return;
-    }
+    [self changePlistName:nil];
     [self.restClient loadFile: [NSString stringWithFormat:@"/%@",plistName] intoPath:fileURL.path];
 }
 
 -(void)restClient:(DBRestClient *)client loadedFile:(NSString *)destPath contentType:(NSString *)contentType metadata:(DBMetadata *)metadata {
     NSLog(@"File loaded into path: %@", destPath);
     [PlistSettingViewController populateLocalDictionary];
+    [self presentAlertView:downloadSuccess];
 }
 
 -(void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error {
@@ -119,7 +127,6 @@ loadMetadataFailedWithError:(NSError *)error {
 
 
 - (IBAction)addVideo:(id)sender {
-    [self updateFileURL];
     if ([plistName length] == 0) {
         [self presentAlertView:emptyGroupName];
         return;
@@ -156,16 +163,29 @@ loadMetadataFailedWithError:(NSError *)error {
     }
     [self presentViewController:alertView animated:true completion:nil];
 }
-
--(void)updateFileURL {
+- (IBAction)changePlistName:(id)sender {
     if([self.groupNameField.text length] == 0){
-        self.groupNameField.text = plistName;
-    }else{
-        plistName = self.groupNameField.text;
+        [self presentAlertView:emptyGroupName];
+        return;
     }
-    if([plistName length] != 0){
-         NSURL *documentsURL = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
-        fileURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist",plistName]];
+    plistName = self.groupNameField.text;
+    NSURL *documentsURL = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
+    fileURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist",plistName]];
+    NSString *filename = @"plistName.txt";
+    NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *localPath = [localDir stringByAppendingPathComponent:filename];
+    [plistName writeToFile:localPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
+- (void)setPlist {
+    NSString *filename = @"plistName.txt";
+    NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *localPath = [localDir stringByAppendingPathComponent:filename];
+    NSFileManager *fileManage = [NSFileManager defaultManager];
+    if([fileManage fileExistsAtPath:localPath]){
+        plistName = [[NSString alloc]initWithContentsOfFile:localPath encoding:NSUTF8StringEncoding error:NULL];
+        self.groupNameField.text = plistName;
+        return;
     }
 }
 
@@ -180,23 +200,42 @@ loadMetadataFailedWithError:(NSError *)error {
     return [returnDic copy];
 }
 
+- (IBAction)clearWebList:(id)sender {
+    for (NSString *key in videoIds.copy) {
+        if([videoIds[key][0] intValue] == FILE_OTHER){
+            [videoIds removeObjectForKey:key];
+        }
+    }
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"WebClear" object:nil];
+}
+
+- (IBAction)clearYoutubeList:(id)sender {
+    for (NSString *key in videoIds.copy) {
+        if([videoIds[key][0] intValue] == FILE_YOUTUBE){
+            [videoIds removeObjectForKey:key];
+        }
+    }
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"YoutubeClear" object:nil];
+}
+
 +(void)populateLocalDictionary {
+    NSString *filename = @"plistName.txt";
+    NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *localPath = [localDir stringByAppendingPathComponent:filename];
+    NSFileManager *fileManage = [NSFileManager defaultManager];
+    if(![fileManage fileExistsAtPath:localPath]){
+        return;
+    }
+    plistName = [[NSString alloc]initWithContentsOfFile:localPath encoding:NSUTF8StringEncoding error:NULL];
+
+    
     NSURL *documentsURL = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
     fileURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist",plistName]];
-    NSFileManager *fileManage = [NSFileManager defaultManager];
     if(![fileManage fileExistsAtPath:fileURL.path]){
         videoIds = [[NSMutableDictionary alloc]init];
         return;
     }
     videoIds= [[NSMutableDictionary alloc] initWithContentsOfFile:fileURL.path];
-}
-
-+(void)setPlistName:(NSString*)name {
-    plistName = name;
-}
-
-+(NSString*) getPlistName {
-    return plistName;
 }
 
 -(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

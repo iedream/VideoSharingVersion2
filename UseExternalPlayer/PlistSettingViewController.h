@@ -15,7 +15,7 @@ typedef enum fileTypes
     FILE_OTHER
 } FileType;
 
-@interface PlistSettingViewController : UIViewController<DBRestClientDelegate>
+@interface PlistSettingViewController : UIViewController<DBRestClientDelegate,UITextFieldDelegate>
 @property (nonatomic, strong) DBRestClient *restClient;
 @property (weak, nonatomic) IBOutlet UITextField *groupNameField;
 @property (weak, nonatomic) IBOutlet UITextField *fileNameField;
@@ -24,6 +24,4 @@ typedef enum fileTypes
 
 +(NSDictionary *)getVideoPlaylist:(FileType)fileType;
 +(void)populateLocalDictionary;
-+(void)setPlistName:(NSString*)name;
-+(NSString*) getPlistName;
 @end

@@ -19,6 +19,9 @@ NSDictionary *youtubeVideoDic;
 //NSMutableDictionary *videoIds;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self refresh];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refresh) name:@"YoutubeClear" object:nil];
 
     playerVars = @{@"playsinline" : @1,};
     //videoIds = [[NSMutableDictionary alloc] initWithDictionary:@{@"一次就好":@"7dgyfnX-nmE",@"空白格":@"GrzzfZ1qaI0",@"最爱":@"OT0wn1mHbOY",@"流浪记":@"miTB7LO2OF8",@"匆匆那年":@"jAoNQ5g3PBI",@"大海":@"UBjLqzy0yI8"}];
@@ -43,6 +46,11 @@ NSDictionary *youtubeVideoDic;
 //    [self.restClient loadMetadata:@"/"];
 //}
 
+-(void)refresh {
+    youtubeVideoDic = [PlistSettingViewController getVideoPlaylist:FILE_YOUTUBE];
+    [self.mainTableView reloadData];
+}
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     youtubeVideoDic = [PlistSettingViewController getVideoPlaylist:FILE_YOUTUBE];
@@ -54,7 +62,7 @@ NSDictionary *youtubeVideoDic;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return youtubeVideoDic.allKeys.count;
+    return [youtubeVideoDic count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
