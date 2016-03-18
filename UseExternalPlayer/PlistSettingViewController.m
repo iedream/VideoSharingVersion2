@@ -18,6 +18,8 @@ NSURL *fileURL;
 NSString *plistName;
 NSMutableDictionary *videoIds;
 UIAlertController *emptyGroupName;
+UIAlertController *emptyPlaylistFolder;
+UIAlertController *createNewPlaylist;
 UIAlertController *downloadError;
 UIAlertController *missingFileName;
 UIAlertController *missingFileURL;
@@ -25,12 +27,15 @@ UIAlertController *uploadSuccess;
 UIAlertController *downloadSuccess;
 UIAlertController *uploadError;
 UIAlertAction *okAction;
+UIAlertAction *cancelAction;
+UIAlertAction *createAction;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setPlist];
     emptyGroupName = [UIAlertController alertControllerWithTitle: @"GroupName cannot be Empty" message:@"Please enter in a GroupName" preferredStyle:UIAlertControllerStyleAlert];
+    emptyPlaylistFolder = [UIAlertController alertControllerWithTitle:@"Cannot Upload Playlist" message:@"Cannot upload an empty playlist" preferredStyle:UIAlertControllerStyleAlert];
     uploadError = [UIAlertController alertControllerWithTitle:@"Upload Error" message:@"Upload Playlist encounters an error. Please make sure you have internet connection" preferredStyle:UIAlertControllerStyleAlert];
     downloadError = [UIAlertController alertControllerWithTitle:@"Download Error" message:@"Download Playlist encounters an error. Please make sure you have internet connection" preferredStyle:UIAlertControllerStyleAlert];
     missingFileName = [UIAlertController alertControllerWithTitle:@"File Name cannot be Empty" message:@"Please enter in a File Name" preferredStyle:UIAlertControllerStyleAlert];
@@ -39,6 +44,7 @@ UIAlertAction *okAction;
     downloadSuccess = [UIAlertController alertControllerWithTitle:@"Download Successful" message:@"PlayList successfully Downloaded" preferredStyle:UIAlertControllerStyleAlert];
     okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
     [emptyGroupName addAction:okAction];
+    [emptyPlaylistFolder addAction:okAction];
     [uploadError addAction:okAction];
     [downloadError addAction:okAction];
     [missingFileName addAction:okAction];
@@ -46,7 +52,16 @@ UIAlertAction *okAction;
     [uploadSuccess addAction:okAction];
     [downloadSuccess addAction:okAction];
     
-   // self.fileURLField.delegate = self;
+    
+    createNewPlaylist = [UIAlertController alertControllerWithTitle:@"Create New Playlist" message:@"This playlist does not exist yet. Are you sure you want to create it?" preferredStyle:UIAlertControllerStyleAlert];
+    cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    createAction = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction *alert) {
+        [self.restClient uploadFile:plistName toPath:@"/" withParentRev:nil fromPath:fileURL.path];
+    }];
+    [createNewPlaylist addAction:createAction];
+    [createNewPlaylist addAction:cancelAction];
+    
+    self.fileURLField.delegate = self;
     
     self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     self.restClient.delegate = self;
@@ -64,6 +79,9 @@ UIAlertAction *okAction;
 
 #pragma mark - Upload Plist Methods
 - (IBAction)uploadPlist:(id)sender {
+    if ([videoIds count] <= 0) {
+        [self presentAlertView:emptyPlaylistFolder];
+    }
     [self changePlistName:nil];
     NSFileManager *fileManage = [NSFileManager defaultManager];
     if(![fileManage fileExistsAtPath:fileURL.path]){
@@ -83,7 +101,7 @@ UIAlertAction *okAction;
                 return;
             }
         }
-        [self.restClient uploadFile:plistName toPath:@"/" withParentRev:nil fromPath:fileURL.path];
+        [self presentAlertView:createNewPlaylist];
     }
 }
 
@@ -146,7 +164,7 @@ loadMetadataFailedWithError:(NSError *)error {
     NSString *fileURL;
     if(self.fileTypeSelector.selectedSegmentIndex == 0){
         fileType = [NSNumber numberWithInt:FILE_YOUTUBE];
-        NSArray *urlArray = [self.fileURLField.text componentsSeparatedByString:@"?v="];
+        NSArray *urlArray = [self.fileURLField.text componentsSeparatedByString:@"v="];
         NSArray *videoIdArray = [urlArray[1] componentsSeparatedByString:@"&"];
         fileURL = videoIdArray[0];
     }else{
@@ -168,6 +186,9 @@ loadMetadataFailedWithError:(NSError *)error {
         [self presentAlertView:emptyGroupName];
         return;
     }
+    if ([self.groupNameField.text isEqualToString:plistName]) {
+        return;
+    }
     plistName = self.groupNameField.text;
     NSURL *documentsURL = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
     fileURL = [documentsURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist",plistName]];
@@ -175,6 +196,13 @@ loadMetadataFailedWithError:(NSError *)error {
     NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *localPath = [localDir stringByAppendingPathComponent:filename];
     [plistName writeToFile:localPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    
+    NSFileManager *fileManage = [NSFileManager defaultManager];
+    if([fileManage fileExistsAtPath:fileURL.path]){
+        videoIds= [[NSMutableDictionary alloc] initWithContentsOfFile:fileURL.path];
+    }else{
+        videoIds = [[NSMutableDictionary alloc]init];
+    }
 }
 
 - (void)setPlist {
@@ -242,6 +270,10 @@ loadMetadataFailedWithError:(NSError *)error {
     [self.view endEditing:true];
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [textField setText:@""];
+}
 /*
 #pragma mark - Navigation
 

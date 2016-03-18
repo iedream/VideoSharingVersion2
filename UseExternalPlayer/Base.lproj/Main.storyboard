@@ -166,10 +166,10 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Video URL" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AXi-hv-oW0">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Video URL" textAlignment="natural" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="AXi-hv-oW0">
                                 <rect key="frame" x="150" y="209" width="374" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k2z-44-4Fo">
                                 <rect key="frame" x="263" y="434" width="74" height="30"/>
@@ -199,7 +199,7 @@
                                     <segment title="Other"/>
                                 </segments>
                             </segmentedControl>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wdb-Ww-n8n">
+                            <textField autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wdb-Ww-n8n">
                                 <rect key="frame" x="150" y="34" width="270" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -225,7 +225,7 @@
                                     <action selector="clearWebList:" destination="R2I-p6-5vu" eventType="touchUpInside" id="qHQ-02-CWA"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Video Name" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lSk-ge-J37">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Video Name" textAlignment="natural" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lSk-ge-J37">
                                 <rect key="frame" x="150" y="278" width="374" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -241,7 +241,6 @@
                             <constraint firstItem="AXi-hv-oW0" firstAttribute="bottom" secondItem="tnn-Ez-x6e" secondAttribute="bottom" id="HPo-qA-4bC"/>
                             <constraint firstItem="k2z-44-4Fo" firstAttribute="centerX" secondItem="CYF-dk-LU6" secondAttribute="centerX" id="JMa-bk-Vwl"/>
                             <constraint firstItem="urJ-Il-Zr0" firstAttribute="leading" secondItem="CYF-dk-LU6" secondAttribute="leading" constant="30" id="Jig-8b-Cuf"/>
-                            <constraint firstItem="lSk-ge-J37" firstAttribute="leading" secondItem="S7r-0t-Rya" secondAttribute="trailing" constant="15" id="KRa-yy-iW7"/>
                             <constraint firstItem="plC-fN-NFI" firstAttribute="bottom" secondItem="rRa-iZ-fVk" secondAttribute="bottom" id="KZk-Vc-mpM"/>
                             <constraint firstItem="aYL-jn-11X" firstAttribute="top" secondItem="Wdb-Ww-n8n" secondAttribute="bottom" constant="30" id="Kan-Os-aay"/>
                             <constraint firstItem="Wdb-Ww-n8n" firstAttribute="bottom" secondItem="fv3-l5-FCc" secondAttribute="bottom" id="L7G-VE-6VD"/>
