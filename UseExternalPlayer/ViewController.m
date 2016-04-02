@@ -16,7 +16,6 @@
 
 NSDictionary *playerVars;
 NSDictionary *youtubeVideoDic;
-//NSMutableDictionary *videoIds;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -24,27 +23,10 @@ NSDictionary *youtubeVideoDic;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refresh) name:@"YoutubeClear" object:nil];
 
     playerVars = @{@"playsinline" : @1,};
-    //videoIds = [[NSMutableDictionary alloc] initWithDictionary:@{@"一次就好":@"7dgyfnX-nmE",@"空白格":@"GrzzfZ1qaI0",@"最爱":@"OT0wn1mHbOY",@"流浪记":@"miTB7LO2OF8",@"匆匆那年":@"jAoNQ5g3PBI",@"大海":@"UBjLqzy0yI8"}];
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
     self.playerView.delegate = self;
-//    [self.playerView loadWithVideoId:@"GrzzfZ1qaI0" playerVars:playerVars];
-    //[self.playerView loadWithVideoId:@"7dgyfnX-nmE"];
-    //[self.playerView loadVideoById:@"M7lc1UVf-VE" startSeconds:0.0f endSeconds:60.0f suggestedQuality:kYTPlaybackQualityAuto];
-    // Do any additional setup after loading the view, typically from a nib.
 }
-
-
-
-//- (IBAction)dropBoxLinking:(id)sender {
-//    if (![[DBSession sharedSession] isLinked]) {
-//        [[DBSession sharedSession] linkFromController:self];
-//    }
-//}
-
-//- (IBAction)checkFile:(id)sender {
-//    [self.restClient loadMetadata:@"/"];
-//}
 
 -(void)refresh {
     youtubeVideoDic = [PlistSettingViewController getVideoPlaylist:FILE_YOUTUBE];
