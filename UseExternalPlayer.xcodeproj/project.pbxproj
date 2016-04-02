@@ -15,7 +15,7 @@
 		4F7ECB591C8A71EF001C23AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7ECB571C8A71EF001C23AC /* LaunchScreen.storyboard */; };
 		4F7ECB641C8A71EF001C23AC /* UseExternalPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7ECB631C8A71EF001C23AC /* UseExternalPlayerTests.m */; };
 		4F7ECB6F1C8A71EF001C23AC /* UseExternalPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7ECB6E1C8A71EF001C23AC /* UseExternalPlayerUITests.m */; };
-		4F90E6751C8BCD3800C8B652 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F90E6741C8BCD3800C8B652 /* DropboxSDK.framework */; };
+		4F9213991CAF8C37008D27A4 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9213981CAF8C37008D27A4 /* DropboxSDK.framework */; };
 		4FAB71971C8E74CE00C1BC1A /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAB71961C8E74CE00C1BC1A /* WebViewController.m */; };
 		4FE25AF51C8CE9EB0080CA78 /* PlistSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE25AF41C8CE9EB0080CA78 /* PlistSettingViewController.m */; };
 		58F70D4CA5C5BEF0FCFB9006 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF72D938B20F9A31440890 /* libPods.a */; };
@@ -55,7 +55,7 @@
 		4F7ECB6A1C8A71EF001C23AC /* UseExternalPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UseExternalPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7ECB6E1C8A71EF001C23AC /* UseExternalPlayerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UseExternalPlayerUITests.m; sourceTree = "<group>"; };
 		4F7ECB701C8A71EF001C23AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F90E6741C8BCD3800C8B652 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		4F9213981CAF8C37008D27A4 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		4FAB71951C8E74CE00C1BC1A /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		4FAB71961C8E74CE00C1BC1A /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		4FE25AF31C8CE9EB0080CA78 /* PlistSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlistSettingViewController.h; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F90E6751C8BCD3800C8B652 /* DropboxSDK.framework in Frameworks */,
+				4F9213991CAF8C37008D27A4 /* DropboxSDK.framework in Frameworks */,
 				58F70D4CA5C5BEF0FCFB9006 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,7 +95,7 @@
 		4F7ECB3D1C8A71EF001C23AC = {
 			isa = PBXGroup;
 			children = (
-				4F90E6741C8BCD3800C8B652 /* DropboxSDK.framework */,
+				4F9213981CAF8C37008D27A4 /* DropboxSDK.framework */,
 				4F7ECB481C8A71EF001C23AC /* UseExternalPlayer */,
 				4F7ECB621C8A71EF001C23AC /* UseExternalPlayerTests */,
 				4F7ECB6D1C8A71EF001C23AC /* UseExternalPlayerUITests */,
