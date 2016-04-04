@@ -99,9 +99,9 @@ UIAlertAction *createAction;
 
 #pragma mark - Upload Plist Methods
 - (IBAction)uploadPlist:(id)sender {
-//    if ([videoIds count] <= 0) {
-//        [self presentAlertView:emptyPlaylistFolder];
-//    }
+    if ([videoIds count] <= 0) {
+        [self presentAlertView:emptyPlaylistFolder];
+    }
     [self changePlistName:nil];
     NSFileManager *fileManage = [NSFileManager defaultManager];
     if(![fileManage fileExistsAtPath:fileURL.path]){
