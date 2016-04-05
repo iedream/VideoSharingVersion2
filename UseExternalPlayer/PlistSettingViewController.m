@@ -101,6 +101,7 @@ UIAlertAction *createAction;
 - (IBAction)uploadPlist:(id)sender {
     if ([videoIds count] <= 0) {
         [self presentAlertView:emptyPlaylistFolder];
+        return;
     }
     [self changePlistName:nil];
     NSFileManager *fileManage = [NSFileManager defaultManager];
@@ -197,9 +198,12 @@ loadMetadataFailedWithError:(NSError *)error {
 
 -(void)presentAlertView:(UIAlertController*)alertView {
     if(self.presentedViewController != nil){
-         [self.presentedViewController.view removeFromSuperview];
+        [self.presentedViewController dismissViewControllerAnimated:true completion:^(void){
+            [self presentViewController:alertView animated:true completion:nil];
+        }];
+    }else{
+        [self presentViewController:alertView animated:true completion:nil];
     }
-    [self presentViewController:alertView animated:true completion:nil];
 }
 - (IBAction)changePlistName:(id)sender {
     if([self.groupNameField.text length] == 0){
