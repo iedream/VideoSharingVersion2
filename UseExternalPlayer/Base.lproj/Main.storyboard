@@ -230,10 +230,25 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1n5-ZP-yqR">
+                                <rect key="frame" x="106" y="142" width="99" height="30"/>
+                                <state key="normal" title="Link Dropbox"/>
+                                <connections>
+                                    <action selector="linkToPersonalDropbox:" destination="R2I-p6-5vu" eventType="touchUpInside" id="79l-HX-fD2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KAk-40-9WQ">
+                                <rect key="frame" x="351" y="142" width="116" height="30"/>
+                                <state key="normal" title="UnLink Dropbox"/>
+                                <connections>
+                                    <action selector="linkToPublicDropbox:" destination="R2I-p6-5vu" eventType="touchUpInside" id="JT7-AD-2C8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="AXi-hv-oW0" secondAttribute="trailing" constant="20" id="5ps-B0-xZW"/>
+                            <constraint firstItem="1n5-ZP-yqR" firstAttribute="leading" secondItem="urJ-Il-Zr0" secondAttribute="leading" id="8PG-7X-eMg"/>
                             <constraint firstItem="AXi-hv-oW0" firstAttribute="top" secondItem="tnn-Ez-x6e" secondAttribute="top" id="CEn-rg-C2z"/>
                             <constraint firstItem="UY1-Zu-K1L" firstAttribute="leading" secondItem="CYF-dk-LU6" secondAttribute="leading" constant="20" id="CqT-dg-Sgb"/>
                             <constraint firstItem="Wdb-Ww-n8n" firstAttribute="bottom" secondItem="My5-0T-3Gq" secondAttribute="bottom" id="E9N-bt-THs"/>
@@ -245,10 +260,12 @@
                             <constraint firstItem="aYL-jn-11X" firstAttribute="top" secondItem="Wdb-Ww-n8n" secondAttribute="bottom" constant="30" id="Kan-Os-aay"/>
                             <constraint firstItem="Wdb-Ww-n8n" firstAttribute="bottom" secondItem="fv3-l5-FCc" secondAttribute="bottom" id="L7G-VE-6VD"/>
                             <constraint firstItem="S7r-0t-Rya" firstAttribute="top" secondItem="tnn-Ez-x6e" secondAttribute="bottom" constant="20" id="MwZ-dv-yBG"/>
+                            <constraint firstItem="KAk-40-9WQ" firstAttribute="trailing" secondItem="aYL-jn-11X" secondAttribute="trailing" id="N4F-Kp-BNp"/>
                             <constraint firstItem="fv3-l5-FCc" firstAttribute="top" secondItem="EEG-ud-W8a" secondAttribute="bottom" constant="20" id="Nja-Ux-M5v"/>
                             <constraint firstItem="AfB-by-ahc" firstAttribute="top" secondItem="UY1-Zu-K1L" secondAttribute="bottom" constant="30" id="Pdu-9l-YfS"/>
                             <constraint firstItem="k2z-44-4Fo" firstAttribute="top" secondItem="plC-fN-NFI" secondAttribute="bottom" constant="30" id="QP0-lA-PBJ"/>
                             <constraint firstAttribute="trailing" secondItem="aYL-jn-11X" secondAttribute="trailing" constant="30" id="QXj-B2-mcg"/>
+                            <constraint firstItem="1n5-ZP-yqR" firstAttribute="top" secondItem="urJ-Il-Zr0" secondAttribute="bottom" constant="15" id="SUC-Gg-3yD"/>
                             <constraint firstItem="rRa-iZ-fVk" firstAttribute="leading" secondItem="CYF-dk-LU6" secondAttribute="leading" constant="20" id="TgG-z0-j3S"/>
                             <constraint firstItem="lSk-ge-J37" firstAttribute="leading" secondItem="AXi-hv-oW0" secondAttribute="leading" id="UHM-2b-iZ9"/>
                             <constraint firstItem="Wdb-Ww-n8n" firstAttribute="leading" secondItem="fv3-l5-FCc" secondAttribute="trailing" constant="15" id="UoL-et-gb5"/>
@@ -263,6 +280,7 @@
                             <constraint firstItem="Wdb-Ww-n8n" firstAttribute="leading" secondItem="lSk-ge-J37" secondAttribute="leading" id="h2Z-ay-gMg"/>
                             <constraint firstItem="lSk-ge-J37" firstAttribute="top" secondItem="S7r-0t-Rya" secondAttribute="top" id="iPj-GF-62W"/>
                             <constraint firstItem="Wdb-Ww-n8n" firstAttribute="top" secondItem="fv3-l5-FCc" secondAttribute="top" id="mpW-1R-a6w"/>
+                            <constraint firstItem="KAk-40-9WQ" firstAttribute="top" secondItem="aYL-jn-11X" secondAttribute="bottom" constant="15" id="oTG-t7-bM8"/>
                             <constraint firstItem="My5-0T-3Gq" firstAttribute="top" secondItem="EEG-ud-W8a" secondAttribute="bottom" constant="20" id="pC7-3c-GkK"/>
                             <constraint firstAttribute="trailing" secondItem="lSk-ge-J37" secondAttribute="trailing" constant="20" id="ra8-Yo-v7f"/>
                             <constraint firstItem="AXi-hv-oW0" firstAttribute="leading" secondItem="plC-fN-NFI" secondAttribute="leading" id="rfY-02-K8j"/>

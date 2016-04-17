@@ -14,44 +14,47 @@
 
 @end
 
+
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    DBSession *dbSession = [[DBSession alloc]initWithAppKey:@"wn0w24k33et1yhg" appSecret:@"yj99i0ktrr5mm9s" root:kDBRootDropbox];
-    [dbSession updateAccessToken:@"1ebth9kxfcw2b13c" accessTokenSecret:@"1ouubp3abzjf2lz" forUserId:@"336589692"];
+    //setting = [[PlistSettingViewController alloc] init];
+    DBSession *dbSession = [[DBSession alloc]initWithAppKey:@"v7qvmmcql1k3leu" appSecret:@"n24c2enkvp10mdl" root:kDBRootAppFolder];
+    [dbSession updateAccessToken:@"9uu88jm18fhverki" accessTokenSecret:@"6zxgx2dbtnnjpqv" forUserId:@"551438413"];
     [DBSession setSharedSession:dbSession];
     [PlistSettingViewController populateLocalDictionary];
     
     return YES;
 }
 
+-(PlistSettingViewController*)getPlistViewController {
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    for (UINavigationController *view in navigationController.viewControllers) {
+        
+        //when found, do the same thing to find the MasterViewController under the nav controller
+        if ([view isKindOfClass:[PlistSettingViewController class]]) {
+            return (PlistSettingViewController*)view;
+        }
+    }
+    return NULL;
+}
+            
 
-//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-//    if ([[DBSession sharedSession] handleOpenURL:url]) {
-//        
-//        [[NSNotificationCenter defaultCenter]
-//         postNotificationName:@"isDropboxLinked"
-//         object:[NSNumber numberWithBool:[[DBSession sharedSession] isLinked]]];
-//        
-//        return YES;
-//    }
-//    
-//    return NO;
-//}
-//
-//-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-//    if ([[DBSession sharedSession] handleOpenURL:url]) {
-//        if ([[DBSession sharedSession] isLinked]) {
-//            NSLog(@"App linked successfully!");
-//            // At this point you can start making API calls
-//        }
-//        return YES;
-//    }
-//    // Add whatever other url handling code your app requires here
-//    return NO;
-//}
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        if ([[DBSession sharedSession] isLinked]) {
+            PlistSettingViewController *plistViewController = [self getPlistViewController];
+            [plistViewController setRestClient];
+            NSLog(@"App linked successfully!");
+            // At this point you can start making API calls
+        }
+        return YES;
+    }
+    // Add whatever other url handling code your app requires here
+    return NO;
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     //[self storeUserId];

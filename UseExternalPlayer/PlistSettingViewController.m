@@ -7,6 +7,7 @@
 //
 
 #import "PlistSettingViewController.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 @interface PlistSettingViewController ()
 
@@ -14,6 +15,7 @@
 
 @implementation PlistSettingViewController
 
+DBRestClient *restClient;
 NSURL *fileURL;
 NSString *plistName;
 NSMutableDictionary *videoIds;
@@ -56,15 +58,15 @@ UIAlertAction *createAction;
     createNewPlaylist = [UIAlertController alertControllerWithTitle:@"Create New Playlist" message:@"This playlist does not exist yet. Are you sure you want to create it?" preferredStyle:UIAlertControllerStyleAlert];
     cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     createAction = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction *alert) {
-        [self.restClient uploadFile:plistName toPath:@"/" withParentRev:nil fromPath:fileURL.path];
+        [restClient uploadFile:plistName toPath:@"/" withParentRev:nil fromPath:fileURL.path];
     }];
     [createNewPlaylist addAction:createAction];
     [createNewPlaylist addAction:cancelAction];
     
     self.fileURLField.delegate = self;
     
-    self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-    self.restClient.delegate = self;
+    restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession] userId:@"551438413"];
+    restClient.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -76,11 +78,30 @@ UIAlertAction *createAction;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)linkToPersonalDropbox:(id)sender {
+    [[DBSession sharedSession] unlinkAll];
+    [[DBSession sharedSession] linkFromController:self];
+}
+
+-(void)setRestClient {
+    NSString* userID = [[[DBSession sharedSession] userIds] firstObject];
+    restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession] userId:userID];
+    restClient.delegate = self;
+}
+- (IBAction)linkToPublicDropbox:(id)sender {
+    [[DBSession sharedSession] unlinkAll];
+    DBSession *dbSession = [[DBSession alloc]initWithAppKey:@"v7qvmmcql1k3leu" appSecret:@"n24c2enkvp10mdl" root:kDBRootAppFolder];
+    [dbSession updateAccessToken:@"9uu88jm18fhverki" accessTokenSecret:@"6zxgx2dbtnnjpqv" forUserId:@"551438413"];
+    [DBSession setSharedSession:dbSession];
+    restClient = [[DBRestClient alloc] initWithSession:dbSession userId:@"551438413"];
+    restClient.delegate = self;
+}
 
 #pragma mark - Upload Plist Methods
 - (IBAction)uploadPlist:(id)sender {
     if ([videoIds count] <= 0) {
         [self presentAlertView:emptyPlaylistFolder];
+        return;
     }
     [self changePlistName:nil];
     NSFileManager *fileManage = [NSFileManager defaultManager];
@@ -88,7 +109,7 @@ UIAlertAction *createAction;
         [self writeToFile];
     }
     [self writeToFile];
-    [self.restClient loadMetadata:@"/"];
+    [restClient loadMetadata:@"/"];
 }
 
 -(void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
@@ -97,7 +118,7 @@ UIAlertAction *createAction;
         for (DBMetadata *file in metadata.contents) {
             NSLog(@"	%@", file.filename);
             if([file.filename isEqualToString:plistName]){
-                [self.restClient uploadFile:plistName toPath:@"/" withParentRev:file.rev fromPath:fileURL.path];
+                [restClient uploadFile:plistName toPath:@"/" withParentRev:file.rev fromPath:fileURL.path];
                 return;
             }
         }
@@ -125,7 +146,7 @@ loadMetadataFailedWithError:(NSError *)error {
 
 - (IBAction)downloadPlist:(id)sender {
     [self changePlistName:nil];
-    [self.restClient loadFile: [NSString stringWithFormat:@"/%@",plistName] intoPath:fileURL.path];
+    [restClient loadFile: [NSString stringWithFormat:@"/%@",plistName] intoPath:fileURL.path];
 }
 
 -(void)restClient:(DBRestClient *)client loadedFile:(NSString *)destPath contentType:(NSString *)contentType metadata:(DBMetadata *)metadata {
@@ -177,9 +198,12 @@ loadMetadataFailedWithError:(NSError *)error {
 
 -(void)presentAlertView:(UIAlertController*)alertView {
     if(self.presentedViewController != nil){
-         [self.presentedViewController.view removeFromSuperview];
+        [self.presentedViewController dismissViewControllerAnimated:true completion:^(void){
+            [self presentViewController:alertView animated:true completion:nil];
+        }];
+    }else{
+        [self presentViewController:alertView animated:true completion:nil];
     }
-    [self presentViewController:alertView animated:true completion:nil];
 }
 - (IBAction)changePlistName:(id)sender {
     if([self.groupNameField.text length] == 0){
